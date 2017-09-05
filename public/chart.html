@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>REAL-CHART</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7">
+    <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var temp;
+        var socket = io();
+        socket.emit ('connect_server');
+        socket.on('mcu_data', function(data) {
+            salinity = data.s1*100 + data.s2;
+        });
+    </script>
+    <script type="text/javascript">
+        FusionCharts.ready(function(){
+            var fusioncharts = new FusionCharts({
+                id: "stockRealTimeChart",
+                type: 'realtimeline',
+                renderAt: 'chart-container',
+                width: '500',
+                height: '300',
+                dataFormat: 'json',
+                dataSource: {
+                    "chart": {
+                        "caption": "Real-time Salinity",
+                        "subCaption": "Pivot Technologies",
+                        "xAxisName": "Time",
+                        "yAxisName": "Salinity",
+                        "numberPrefix": "",
+                        "refreshinterval": "1",
+                        "yaxisminvalue": "0",
+                        "yaxismaxvalue": "1000",
+                        "numdisplaysets": "10",
+                        "labeldisplay": "rotate",
+                        "showValues": "0",
+                        "showRealTimeValue": "0",
+                        "theme": "fint"
+                    },
+                    "categories": [{
+                        "category": [{
+                            "label": "Day Start"
+                        }]
+                    }],
+                    "dataset": [{
+                        "data": [{
+                            "value": "35.27"
+                        }]
+                    }]
+                },
+                "events": {
+                                "initialized": function(e) {
+                                function addLeadingZero(num) {
+                                    return (num <= 9) ? ("0" + num) : num;
+                                }
+
+                                function updateData() {
+                                // Get reference to the chart using its ID
+                                var chartRef = FusionCharts("stockRealTimeChart"),
+                                    // We need to create a querystring format incremental update, containing
+                                    // label in hh:mm:ss format
+                                    // and a value (random).
+                                    currDate = new Date(),
+                                    label = 
+                                    addLeadingZero(currDate.getMinutes()) + ":" +
+                                    addLeadingZero(currDate.getSeconds()),
+                                    // Get random number between 35.25 & 35.75 - rounded to 2 decimal places
+                                    randomValue = salinity;
+                                    // Build Data String in format &label=...&value=...
+                                    strData = "&label=" + label + "&value=" + randomValue;
+                                     // Feed it to chart.
+                                     chartRef.feedData(strData);
+                                }
+
+                                e.sender.chartInterval = setInterval(function() {
+                                    updateData();
+                                }, 1000);
+                                },
+                                "disposed": function(evt, arg) {
+                                    clearInterval(evt.sender.chartInterval);
+                                }
+                            }
+            });
+            fusioncharts.render();
+        });
+    </script>
+    <script type="text/javascript">
+        function downloadData() {
+            socket.emit ('downloadData');
+        }
+    </script>
+</head>
+<body>
+  <div id="chart-container" style="text-align: center;">FusionCharts XT will load here!</div>
+  <button onclick="downloadData()">DOWNLOAD DATA</button>
+</body>
+</html>

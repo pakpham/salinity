@@ -1,0 +1,64 @@
+		    body {margin:0; width: 100%;}
+		    body { text-align: center; font-size: 15pt; font: monospace; }
+		    h1 { font-weight: bold; font-size: 25pt;}
+		    h2 { font-weight: bold; font-size: 25pt; text-align: left;  }
+		    button { font-weight: bold; font-size: 15pt; }
+		    body {background: skyblue; font-family: verdana; color: #fff; padding: 30px;}
+		    p {text-align: left; color: #222; text-align: justify;}
+		    #border {
+		    	border-radius: 20px; border-style: double; background-color: #9CF;
+		    }
+		    div.container {
+		    	width: 100%;
+		    	border: 1px solid gray;
+		    }
+		    .lienket{       
+		    	/*background-color: black;*/
+		    	/*color: black;*/
+			    /*border: 2px solid #73AD21;
+			    border-radius:5px;*/
+			    padding: 10px 20px;
+			    text-align: center;
+			    text-decoration: none;
+			    display: inline-block;
+			    font-size: 16px;
+			    font-family: "Lucida Sans Unicode";
+			}
+			.lienket:hover{
+				background-color: #73AD21;
+				color:white;
+			}
+			.cuoiloi {
+				background-color: #333;
+				padding-top:40px;
+				padding-right:40px;
+				padding-bottom:20px;
+				padding-left:40px;
+			}
+			.navbar {
+				overflow: hidden;
+				background-color: #333;
+				position: fixed;
+				top: 0;
+				width: 100%;
+			}
+
+			.navbar a {
+				float: left;
+				display: block;
+				color: #f2f2f2;
+				text-align: center;
+				padding: 20px 17px;
+				text-decoration: none;
+				font-size: 20px;
+			}
+
+			.main {
+				padding: 16px;
+				margin-top: 30px;
+				height: 1500px; /* Used in this example to enable scrolling */
+			}
+
+
+
+			b {color: black};
